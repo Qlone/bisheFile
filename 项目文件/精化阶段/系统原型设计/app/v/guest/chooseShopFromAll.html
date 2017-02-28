@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="./javascript/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.mobile-1.4.0.min.js" type="text/javascript"></script>
+    <link href="./content/jquery.mobile.flatui.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        li{
+            list-style-type:none;
+            text-align:left;
+            margin-left:105px;
+            line-height:30px;
+        }
+    </style>
+</head>
+
+ <body>
+ 	<div data-role="page" data-theme="d">
+
+        <div data-role="header" data-position="fixed" data-theme="d">
+            <a href="#" data-role="button" data-icon="back" data-rel="back">返回</a>
+            <h5>所有店铺</h5>
+            <a href="?ctl=guest&act=chooseShop" data-role="button" data-icon="bullets">附近</a>
+        </div>
+        <div id="shops">
+            <?php foreach($data as $key => $item): ?>
+            <div role="main" onclick="this.style.backgroundColor='#B0C4DE'; location.href='?ctl=guest&act=chooseStyle&shopId=<?php echo $item["shopid"];?>'" class="ui-content">
+                
+                <img src="?ctl=guest&act=getShopPic&shopId=<?php echo $item['shopid'];?>" width="90" height="90" style="float:left">
+                <li style="list-style-type:none; text-align:left; margin-left:105px; line-height:30px"><b>店铺名称：&nbsp;<?php echo $item["name"];?></b></li>
+                <li style="list-style-type:none; text-align:left; margin-left:105px; line-height:30px"><b>店铺评价：&nbsp;<?php echo $item["stars"];?></b>&nbsp;颗星</li>
+                <li style="list-style-type:none; text-align:left; margin-left:105px; line-height:30px"><b>距离约为&nbsp;<?php echo $item["distance"];?></b>千米</li>
+                
+            </div>
+            <HR style="border:1 dashed #987cb9" width="95%" color=#987cb9 SIZE=1>
+            <?php endforeach; ?>
+        </div>
+        <center id="msg">正在努力加载中...</center>
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div style="font-size:12px; line-height:150%; text-align:left; margin-left:5px; float:left">版权所有：Neal</div>
+            <div style="font-size:12px; line-height:150%; text-align:right; margin-right:10px; float:right">理发由你安排</div>
+        </div><!-- /footer -->
+    </div>
+ 
+ </body>
+
+</html>
+<script type="text/javascript">
+    count = "<?php echo $count; ?>";
+    if(count == 1){
+        $("#msg").text("已加载完毕");
+        return false;
+    }
+    page = 2;
+    $(function(){
+        $(window).scroll(function() {
+        //当内容滚动到底部时加载新的内容
+            if ($(this).scrollTop() + $(window).height() >= $(document).height() && $(this).scrollTop() > 20) {
+                //当前要加载的页码
+                if(page <= count){
+                    LoadPage(page);
+                    page = page + 1;
+                }else{
+                    $("#msg").text("已加载完毕");
+                    return false;
+                }
+            }
+        });
+    });
+    
+    function LoadPage(page){
+        $.post("?ctl=guest&act=getMoreShopsForAll", {
+            page: page
+        }, function(data){
+            var result = jQuery.parseJSON(data);
+            var temp = "";
+            
+            for(var i=0; i<result.length; i++){
+                temp += "<div role='main' onclick='this.style.backgroundColor='#B0C4DE'; location.href='?ctl=guest&act=chooseStyle&shopId='"+ result[i].shopid+" class='ui-content'>";
+                temp += "<img src='?ctl=guest&act=getShopPic&shopId=" + result[i].shopid + "' width='90' height='90' style='float:left'>";
+                temp += "<li><b>店铺名称：&nbsp;" + result[i].name + "</b></li>";
+                temp += "<li><b>店铺评价：&nbsp;" + result[i].stars + "</b>&nbsp;颗星</li>";
+                temp += "<li><b>距离约为&nbsp;" + result[i].distance + "</b>&nbsp;千米</li>"
+                temp += "</div><HR style='border:1 dashed #987cb9' width='95%' color=#987cb9 SIZE=1>"
+            }
+            $("#shops").append(temp);
+            
+        });
+    }
+</script>

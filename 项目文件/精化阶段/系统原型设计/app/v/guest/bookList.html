@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="./javascript/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.mobile-1.4.0.min.js" type="text/javascript"></script>
+    <link href="./content/jquery.mobile.flatui.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+ 	<div data-role="page" data-theme="h">
+
+        <div data-role="header" data-position="fixed" data-theme="d">
+            <a href="#" data-role="button" data-icon="back" data-rel="back">返回</a>
+            <h5>预约列表</h5>
+        </div>
+       	
+	  	<div role="main" class="ui-content">
+           
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:33%"><a href="#" data-role="button">时间</a></div>
+                <div class="ui-block-b" style="width:33%"><a href="#" data-role="button">店铺</a></div>
+                <div class="ui-block-c" style="width:33%"><a href="#" data-role="button">操作</a></div>
+                <?php foreach($data as $key => $item): ?>
+                <div class="ui-block-a" style="text-align:center; width:33%"><span><?php echo $item["time"];?></span></div>
+                <div class="ui-block-b" style="text-align:center; width:33%"><span><?php echo $item["name"];?></span></div>
+                <div class="ui-block-c" style="text-align:center; width:33%">
+                    <span>
+                        <a href="?ctl=guest&act=visitBook&bookId=<?php echo $item["bookid"];?>">查看</a>
+                        <a data-ajax="false" href="?ctl=guest&act=toEvaluate&bookId=<?php echo $item["bookid"];?>">评价</a>
+                    </span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+	  	</div>
+	  	
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div style="font-size:12px; line-height:150%; text-align:left; margin-left:5px; float:left">版权所有：Neal</div>
+            <div style="font-size:12px; line-height:150%; text-align:right; margin-right:10px; float:right">理发由你安排</div>
+        </div><!-- /footer -->
+    </div>
+ 
+ </body>
+</html>

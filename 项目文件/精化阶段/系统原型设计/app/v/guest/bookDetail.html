@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="./javascript/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.mobile-1.4.0.min.js" type="text/javascript"></script>
+    <link href="./content/jquery.mobile.flatui.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+ 	<div data-role="page" data-theme="d">
+
+        <div data-role="header" data-position="fixed" data-theme="d">
+            <a href="#" data-role="button" data-icon="back" data-rel="back">返回</a>
+            <h5>预约详情</h5>
+        </div>
+	  	<div role="main" class="ui-content">
+            <center>
+                <div><b style="font-size:20px;">我的预约</b></div><br/>
+                <img src="?ctl=guest&act=getStylePic&styleId=<?php echo $data['styleid'];?>" style="width:150px; height:150px;"/>
+            </center>
+            <br/>
+            <div><b>预约时间：<?php echo $data["time"];?></b></div><br/><br/>
+            <div><b>店铺名称：<?php echo $data["shopname"];?></b></div><br/><br/>
+            <div><b>预约样式：<?php echo $data["styleid"];?></b></div><br/><br/>
+            <div><b>我的姓名：<?php echo $data["name"];?></b></div><br/><br/>
+            <div><b>我的电话：<?php echo $data["tel"];?></b></div><br/><br/>
+            <div><b>我的留言：<?php echo $data["message"]; ?></b></div><br/><br/>
+            <center>
+                <div>
+                    <a href="?ctl=guest&act=bookList" data-role="button" data-theme="g" data-inline="true">返回列表</a>
+                    <a href="?ctl=guest&act=toEvaluate&bookId=<?php echo $bookId;?>" data-role="button" data-theme="g" data-inline="true">我要评价</a>
+                </div>
+            </center>
+	  	</div>
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div style="font-size:12px; line-height:150%; text-align:left; margin-left:5px; float:left">版权所有：Neal</div>
+            <div style="font-size:12px; line-height:150%; text-align:right; margin-right:10px; float:right">理发由你安排</div>
+        </div><!-- /footer -->
+    </div>
+ 
+ </body>
+</html>

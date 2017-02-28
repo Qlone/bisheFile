@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="./javascript/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.mobile-1.4.0.min.js" type="text/javascript"></script>
+    <link href="./content/jquery.mobile.flatui.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+ 	<div data-role="page" data-theme="d">
+
+        <div data-role="header" data-position="fixed" data-theme="d">
+            <a href="#" data-role="button" data-icon="back" data-rel="back">返回</a>
+            <h5>我要评价</h5>
+        </div>
+       	<div role="main" class="ui-content">
+            <form name="book" action="?ctl=guest&act=evaluate" method="POST">
+                <input name="data[guestid]" value="<?php echo $data["guestid"];?>" type="hidden"/>
+                <input name="data[shopid]" value="<?php echo $data["shopid"];?>" type="hidden"/>
+                <input name="data[styleid]" value="<?php echo $data["styleid"];?>" type="hidden"/>
+                <input name="data[bookid]" value="<?php echo $data["bookid"];?>" type="hidden"/>
+                <input name="data[time]" value="<?php echo $data["time"];?>" type="hidden"/>
+                <input name="data[name]" value="<?php echo $data["name"];?>" type="hidden"/>
+                <fieldset data-role="controlgroup" data-theme="c">
+                    <b>评价：</b><br/><br/>
+                    <input type="radio" id="5stars" name="data[stars]" value="5" checked>
+                        <label for="5stars"> 五颗星</label>
+                    <input type="radio" id="4stars" name="data[stars]" value="4">
+                        <label for="4stars"> 四颗星</label>
+                    <input type="radio" id="3stars" name="data[stars]" value="3">
+                        <label for="3stars"> 三颗星</label>
+                    <input type="radio" id="2stars" name="data[stars]" value="2">
+                        <label for="2stars"> 两颗星</label>
+                    <input type="radio" id="1stars" name="data[stars]" value="1">
+                        <label for="1stars"> 一颗星</label>
+                </fieldset><br/>
+                <b>建议或意见：</b><textarea name="data[message]"></textarea><br/>
+                <input type="submit" data-theme="g" value="提交评价" />
+            </form>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div style="font-size:12px; line-height:150%; text-align:left; margin-left:5px; float:left">版权所有：Neal</div>
+            <div style="font-size:12px; line-height:150%; text-align:right; margin-right:10px; float:right">理发由你安排</div>
+        </div><!-- /footer -->
+    </div>
+ 
+ </body>
+</html>

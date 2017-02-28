@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="./javascript/jquery-1.9.0.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.mobile-1.4.0.min.js" type="text/javascript"></script>
+    <link href="./content/jquery.mobile.flatui.css" rel="stylesheet" type="text/css" />
+    <script src="./javascript/masonry.pkgd.min.js" type="text/javascript"></script>
+    <script src="./javascript/imagesLoaded.pkgd.min.js" type="text/javascript"></script>
+    <script src="./javascript/jquery.infinitescroll.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        li{
+            list-style-type:none;
+            text-align:left;
+            line-height:30px;
+        }
+        .box {
+          	width: 120px;
+            margin: 5px;
+        }
+        .box img {
+          	max-width: 100%;
+            float: left;
+        }
+    </style>
+ </head>
+ <body>
+ 	<div data-role="page" data-theme="d">
+
+        <div data-role="header" data-position="fixed" data-theme="d">
+            <a href="#" data-role="button" data-icon="back" data-rel="back">返回</a>
+            <h5>选择样式</h5>
+            <a data-ajax="false" href="?ctl=guest&act=visitShop&shopId=<?php echo $shopId;?>" data-role="button" data-icon="bullets">进店</a>
+        </div>
+        <center>
+            <b style="margin:20px; font-size:20px;">
+                <?php 
+					if(empty($data)){ 
+						echo "<br/><br/><br/>啊哦(╯﹏╰)<br/><br/>店主还没有添加任何样式<br/><br/>去别的店看看吧<br/><br/><br/><br/><br/><br/>
+						<a href='?ctl=guest&act=chooseShop' data-role='button' style='text-align:center; width:50px;' data-icon='carat-l' data-theme='g'>返回</a>"; 
+					} 
+				?>
+            </b>
+        </center>
+        <div id="styles" class="ui-content">
+       		<?php foreach($data as $key => $item): ?>
+            <div class="box" role="main" onclick="this.style.backgroundColor='#B0C4DE'; location.href='?ctl=guest&act=detail&styleId=<?php echo $item["styleid"];?>'">
+                <img src="?ctl=guest&act=getStylePic&styleId=<?php echo $item['styleid'];?>">
+                <li><b><?php echo $item["time"];?>&nbsp;分钟；RMB&nbsp;<?php echo $item["price"];?>元</b></li>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <div id="npage" ><a href="?ctl=guest&act=getStyles&shopId=<?php echo $shopId; ?>&page=2"></a></div>
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div style="font-size:12px; line-height:150%; text-align:left; margin-left:5px; float:left">版权所有：Neal</div>
+            <div style="font-size:12px; line-height:150%; text-align:right; margin-right:10px; float:right">理发由你安排</div>
+        </div><!-- /footer -->
+    </div> 
+    
+ 
+ </body>
+</html>
+<script type="text/javascript">
+    $(function(){
+      	var $container = $('#styles'); 
+      	$container.imagesLoaded(function(){
+        	$container.masonry({
+          		columnWidth: 235,
+          		itemSelector: '.box',
+          		gutter: 20
+        	});
+      	});
+        $container.infinitescroll({
+            navSelector : "#npage",
+            nextSelector : "#npage a",
+            itemSelector : ".box",
+            pixelsFromNavToBottom: 200,
+        },function( newElements ) {
+            //首先隐藏
+            var $newElems = $( newElements ).css({ opacity: 0 });
+            $newElems.imagesLoaded(function(){
+              	//布局时显示
+              	$newElems.animate({ opacity: 1 });
+              	$container.masonry( 'appended', $newElems, true );
+    		});
+  		});
+    });
+</script>
